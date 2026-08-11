@@ -1,0 +1,9 @@
+{
+  "explicit": [
+    {
+      "id": "fixture.complete-caption",
+      "text": "The complete visible Figure 3 caption must remain part of the accepted figure package."
+    }
+  ],
+  "conflicts": []
+}

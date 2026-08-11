@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">劳动力任务重构判断树的中文重绘</title>
+  <desc id="desc">与源决策树等价的、没有文字碰撞的独立中文重绘图。</desc>
+  <style>
+    .heading { font: 700 29px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #0c4a6e; }
+    .card { fill: #f9fcff; stroke: #0369a1; stroke-width: 2.4; rx: 12; }
+    .outcome { fill: #f0fdf4; stroke: #15803d; stroke-width: 2.4; rx: 12; }
+    .warning { fill: #fff7ed; stroke: #c2410c; stroke-width: 2.4; rx: 12; }
+    .question { font: 600 18px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #132b3a; text-anchor: middle; }
+    .note { font: 500 14px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #3d6172; text-anchor: middle; }
+    .line { stroke: #4d7184; stroke-width: 2.4; fill: none; marker-end: url(#tip); }
+  </style>
+  <defs><marker id="tip" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L8 3 z" fill="#4d7184"/></marker></defs>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="480" y="44" class="heading" text-anchor="middle">中文重绘：劳动任务是否会被重构？</text>
+  <rect x="272" y="78" width="416" height="64" class="card"/>
+  <text x="480" y="116" class="question">Q1：AI 能否完成任务中有价值的一部分？</text>
+  <path d="M480 142 V172" class="line"/>
+  <rect x="272" y="176" width="416" height="64" class="card"/>
+  <text x="480" y="214" class="question">Q2：成本下降后，需求会不会扩大？</text>
+  <path d="M272 208 H136 V302" class="line"/>
+  <text x="188" y="196" class="note">否 / 不足</text>
+  <rect x="36" y="308" width="200" height="80" class="warning"/>
+  <text x="136" y="344" class="question">自动化风险较高</text>
+  <text x="136" y="368" class="note">新增需求不足</text>
+  <path d="M480 240 V270" class="line"/>
+  <text x="494" y="260" class="note">是</text>
+  <rect x="272" y="274" width="416" height="64" class="card"/>
+  <text x="480" y="312" class="question">Q3：人是否仍承担关键交付或问责？</text>
+  <path d="M688 306 H780" class="line"/>
+  <text x="724" y="294" class="note">是</text>
+  <rect x="760" y="268" width="164" height="78" class="outcome"/>
+  <text x="842" y="303" class="question">工作重组</text>
+  <text x="842" y="327" class="note">人仍关键</text>
+  <path d="M480 338 V394" class="line"/>
+  <text x="494" y="370" class="note">否</text>
+  <rect x="272" y="400" width="416" height="80" class="outcome"/>
+  <text x="480" y="436" class="question">需求增长可吸收新增产出</text>
+  <text x="480" y="461" class="note">岗位变化，而非简单消失</text>
+  <text x="480" y="530" class="note">图注：独立作者重绘；与 source-decision-tree.svg 表达同一结构。</text>
+</svg>

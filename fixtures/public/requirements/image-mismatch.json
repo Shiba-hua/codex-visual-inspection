@@ -1,0 +1,19 @@
+{
+  "explicit": [
+    {
+      "id": "fixture.source-redraw-correspondence",
+      "text": "The claimed Chinese redraw must depict the same decision process as its paired source figure; an unrelated chart is unacceptable."
+    },
+    {
+      "id": "fixture.no-text-collision",
+      "text": "Titles, legends, labels, and annotations must not overlap or obscure one another."
+    }
+  ],
+  "inferred": [
+    {
+      "id": "fixture.roles-are-distinct",
+      "text": "The source figure and the independent redraw are separate assets and must be checked independently before their semantic correspondence is assessed."
+    }
+  ],
+  "conflicts": []
+}

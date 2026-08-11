@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="500" viewBox="0 0 860 500" role="img" aria-labelledby="title desc">
+  <title id="title">左侧标签被裁断的图表</title>
+  <desc id="desc">故意让长模型名称从视口左侧溢出，以测试裁断检测。</desc>
+  <style>
+    .t { font: 700 26px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #183a56; }
+    .l { font: 500 19px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #233542; }
+    .b { fill: #4f81bd; }
+  </style>
+  <rect width="860" height="500" fill="#fff"/>
+  <text x="430" y="42" class="t" text-anchor="middle">故意裁断：模型通过率</text>
+  <line x1="160" y1="420" x2="790" y2="420" stroke="#465a69" stroke-width="2"/>
+  <text x="-45" y="132" class="l">Muse Spark（标签应完整可见）</text><rect x="160" y="105" width="530" height="38" class="b"/>
+  <text x="-25" y="212" class="l">Claude Opus 4.7（左侧被切）</text><rect x="160" y="185" width="465" height="38" class="b"/>
+  <text x="-70" y="292" class="l">Gemini 3 Pro Preview（左侧被切）</text><rect x="160" y="265" width="410" height="38" class="b"/>
+  <text x="-15" y="372" class="l">Open model baseline（左侧被切）</text><rect x="160" y="345" width="330" height="38" class="b"/>
+  <text x="430" y="472" class="l" text-anchor="middle">通过率（%）</text>
+</svg>

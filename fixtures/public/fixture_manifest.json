@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "license": "MIT",
+  "asset_origin": "All SVG assets are original hand-drawn fixtures for this repository.",
+  "cases": [
+    {
+      "id": "image-mismatch",
+      "input": "inputs/image-mismatch.md",
+      "requirements_file": "requirements/image-mismatch.json",
+      "expected_blocking_categories": [
+        "semantic_mismatch",
+        "layout_collision"
+      ]
+    },
+    {
+      "id": "correct-pair",
+      "input": "inputs/correct-pair.md",
+      "expected_blocking_categories": []
+    },
+    {
+      "id": "caption-required",
+      "input": "inputs/caption-required.md",
+      "requirements_file": "requirements/caption-required.json",
+      "expected_blocking_categories": []
+    },
+    {
+      "id": "crop-truncation",
+      "input": "assets/cropped-left-labels.svg",
+      "expected_blocking_categories": [
+        "crop_truncation"
+      ]
+    },
+    {
+      "id": "crop-excess",
+      "input": "assets/body-heavy-crop.svg",
+      "expected_blocking_categories": [
+        "crop_excess"
+      ]
+    }
+  ]
+}

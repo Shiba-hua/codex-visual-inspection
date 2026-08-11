@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">劳动力任务重构判断树</title>
+  <desc id="desc">自绘的中文决策树，包含三个问题和四个结果。</desc>
+  <style>
+    .title { font: 700 28px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #17324d; }
+    .box { fill: #f8fbff; stroke: #255f85; stroke-width: 2.5; rx: 13; }
+    .result { fill: #f2f8f4; stroke: #23875c; stroke-width: 2.5; rx: 13; }
+    .risk { fill: #fff7f7; stroke: #bf5050; stroke-width: 2.5; rx: 13; }
+    .text { font: 500 18px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #172b3a; text-anchor: middle; }
+    .small { font: 500 15px 'Noto Sans CJK SC', 'PingFang SC', sans-serif; fill: #385161; text-anchor: middle; }
+    .edge { stroke: #627d8b; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    .yes { font: 700 16px sans-serif; fill: #16725a; }
+    .no { font: 700 16px sans-serif; fill: #b64444; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#627d8b"/></marker>
+  </defs>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="480" y="42" class="title" text-anchor="middle">劳动任务重构判断树（公开自绘 fixture）</text>
+  <rect x="292" y="70" width="376" height="75" class="box"/>
+  <text x="480" y="102" class="text">Q1：AI 能否完成职业中有意义的一部分工作？</text>
+  <text x="480" y="128" class="small">技术成熟 / 任务边界清晰</text>
+  <path d="M480 145 V178" class="edge"/>
+  <rect x="292" y="182" width="376" height="75" class="box"/>
+  <text x="480" y="214" class="text">Q2：降本后需求扩张能否吸收产出？</text>
+  <text x="480" y="240" class="small">数量、可负担性、使用频率与新客户</text>
+  <path d="M292 219 H155 V320" class="edge"/>
+  <text x="215" y="207" class="no">否 / 不足</text>
+  <rect x="55" y="326" width="210" height="88" class="risk"/>
+  <text x="160" y="360" class="text">较高自动化风险</text>
+  <text x="160" y="387" class="small">人类需求不明或未增长</text>
+  <path d="M480 257 V290" class="edge"/>
+  <text x="492" y="278" class="yes">是</text>
+  <rect x="292" y="294" width="376" height="75" class="box"/>
+  <text x="480" y="326" class="text">Q3：人是否仍是交付、判断或问责中心？</text>
+  <text x="480" y="352" class="small">剩余任务的关键价值归属</text>
+  <path d="M668 332 H780" class="edge"/>
+  <text x="714" y="320" class="yes">是</text>
+  <rect x="760" y="287" width="165" height="90" class="result"/>
+  <text x="842" y="324" class="text">工作重组</text>
+  <text x="842" y="351" class="small">人仍关键</text>
+  <path d="M480 369 V412" class="edge"/>
+  <text x="492" y="396" class="no">否</text>
+  <rect x="292" y="418" width="376" height="86" class="result"/>
+  <text x="480" y="452" class="text">需求增长可补足</text>
+  <text x="480" y="480" class="small">随 AI 增长而扩大的人类工作</text>
+  <text x="480" y="538" class="small">图注：这是为公开测试而制作的原创示意图，不代表真实论文 Figure。</text>
+</svg>

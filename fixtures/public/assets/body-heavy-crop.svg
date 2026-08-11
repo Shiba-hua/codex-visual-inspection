@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">过度截取正文的示例</title>
+  <desc id="desc">大段无关模拟正文挤占画面，真正的小图表位于右下角。</desc>
+  <style>
+    .paper { font: 500 16px Georgia, serif; fill: #3c4348; }
+    .head { font: 700 22px Georgia, serif; fill: #1e2d36; }
+    .label { font: 600 15px sans-serif; fill: #1b3f5d; }
+  </style>
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="55" y="62" class="head">2.2 Synthetic paper body accidentally captured in a figure crop</text>
+  <text x="55" y="103" class="paper">This original fixture text is intentionally irrelevant. A useful figure crop should focus</text>
+  <text x="55" y="130" class="paper">on the diagram, chart, or table rather than swallowing a page of explanatory prose.</text>
+  <text x="55" y="157" class="paper">The text is not sourced from a paper and exists only to test crop-excess detection.</text>
+  <text x="55" y="184" class="paper">A caption may be useful when requested; surrounding paragraphs usually are not.</text>
+  <text x="55" y="211" class="paper">Repeated lines emphasize that this crop has the wrong visual focus.</text>
+  <text x="55" y="238" class="paper">The small benchmark chart at bottom right is the intended object of interest.</text>
+  <rect x="620" y="315" width="270" height="160" fill="#fbfdff" stroke="#8aa5b7"/>
+  <line x1="650" y1="440" x2="850" y2="440" stroke="#4c6676" stroke-width="2"/>
+  <line x1="650" y1="345" x2="650" y2="440" stroke="#4c6676" stroke-width="2"/>
+  <rect x="680" y="372" width="30" height="68" fill="#4f81bd"/><rect x="735" y="355" width="30" height="85" fill="#60a98d"/><rect x="790" y="388" width="30" height="52" fill="#e2a85d"/>
+  <text x="755" y="338" class="label" text-anchor="middle">实际应验收的小图表</text>
+  <text x="755" y="510" class="paper" text-anchor="middle">图注：小图位于右下，正文不应成为截图主体。</text>
+</svg>
