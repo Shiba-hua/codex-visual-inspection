@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Figure Acceptance audit finding",
+  "type": "object",
+  "required": ["task_id", "status", "model", "findings"],
+  "properties": {
+    "task_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["PASS", "FAIL", "NEEDS_HUMAN"]},
+    "model": {"const": "gpt-5.6-luna"},
+    "confidence_note": {"type": "string"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "severity", "evidence", "repair_action"],
+        "properties": {
+          "category": {
+            "enum": [
+              "crop_truncation",
+              "crop_excess",
+              "layout_collision",
+              "legibility",
+              "semantic_mismatch",
+              "role_confusion",
+              "duplicate_or_misaligned",
+              "missing_context"
+            ]
+          },
+          "severity": {"enum": ["blocking", "advisory"]},
+          "evidence": {"type": "string", "minLength": 1},
+          "violated_requirements": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "repair_action": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

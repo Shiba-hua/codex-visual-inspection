@@ -1,0 +1,12 @@
+# Generated Figure Acceptance runs
+.figure-acceptance/
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+
+# Editor and operating-system noise
+.DS_Store
+.idea/
+.vscode/
