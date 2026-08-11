@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic support tooling for the Figure Acceptance Codex skill.
+"""Deterministic support tooling for the Visual Inspection Codex skill.
 
 The script discovers logical figure placements, prepares local visual evidence,
 and validates structured Luna audit results. It never edits the audited input.
@@ -20,10 +20,18 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-TOOL_VERSION = "0.1.0"
-POLICY_VERSION = "1.0.0"
+TOOL_VERSION = "0.2.0"
+POLICY_VERSION = "2.0.0"
 REQUIRED_MODEL = "gpt-5.6-luna"
 ALLOWED_STATUSES = {"PASS", "FAIL", "NEEDS_HUMAN"}
+ALLOWED_CATEGORIES = {
+    "crop_truncation", "crop_excess", "layout_collision", "legibility",
+    "semantic_mismatch", "role_confusion", "duplicate_or_misaligned", "missing_context",
+    "figure_text_metric_mismatch", "figure_text_trend_mismatch",
+    "figure_caption_body_mismatch", "evidence_low_resolution", "source_residue",
+    "precise_region_evidence",
+}
+FIGURE_TEXT_CATEGORIES = {"figure_text_metric_mismatch", "figure_text_trend_mismatch", "figure_caption_body_mismatch"}
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif", ".bmp", ".tif", ".tiff"}
 
 
@@ -166,9 +174,9 @@ def load_requirements(path: Path | None) -> dict[str, Any]:
 def parse_marker(line: str) -> dict[str, str]:
     """Read a lightweight Markdown marker placed immediately above an image.
 
-    Example: <!-- figure-acceptance: role=source_figure pair_id=tree-01 -->
+    Example: <!-- visual-inspection: role=source_figure pair_id=tree-01 -->
     """
-    match = re.search(r"<!--\s*figure-acceptance:\s*(.*?)\s*-->", line, flags=re.IGNORECASE)
+    match = re.search(r"<!--\s*(?:visual-inspection|figure-acceptance):\s*(.*?)\s*-->", line, flags=re.IGNORECASE)
     if not match:
         return {}
     return {key: value for key, value in re.findall(r"([A-Za-z_][\w-]*)=([^\s>]+)", match.group(1))}
@@ -408,7 +416,7 @@ def determine_root(target: Path) -> Path:
 def default_run_dir(target: Path) -> Path:
     base = target.resolve() if target.is_dir() else target.resolve().parent
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    return base / ".figure-acceptance" / "runs" / stamp
+    return base / ".visual-inspection" / "runs" / stamp
 
 
 def ensure_safe_run_dir(target: Path, run_dir: Path) -> None:
@@ -451,7 +459,7 @@ def build_tasks(placements: list[dict[str, Any]], requirements: dict[str, Any]) 
             "required_model": REQUIRED_MODEL,
             "reasoning_effort": "medium",
             "auditor_policy_version": POLICY_VERSION,
-            "auditor_policy_ref": "plugins/figure-acceptance/assets/auditor-policy.md",
+            "auditor_policy_ref": "plugins/visual-inspection/assets/auditor-policy.md",
             "retry_policy": {"max_attempts": 2, "same_model_only": True},
             "placement": placement,
             "requirements": requirements["effective"],
@@ -550,17 +558,25 @@ def validate_finding(record: dict[str, Any]) -> list[str]:
         for field in ("category", "severity", "evidence", "repair_action"):
             if not isinstance(finding.get(field), str) or not finding[field].strip():
                 errors.append(f"finding {index} missing {field}")
+        if finding.get("category") not in ALLOWED_CATEGORIES:
+            errors.append(f"finding {index} has unknown category")
+        if finding.get("disposition", "defect") not in {"defect", "exempt"}:
+            errors.append(f"finding {index} has invalid disposition")
+        if finding.get("category") in FIGURE_TEXT_CATEGORIES:
+            for field in ("figure_evidence", "text_evidence", "contradiction"):
+                if not isinstance(finding.get(field), dict):
+                    errors.append(f"finding {index} requires {field} for figure-text evidence")
         if finding.get("severity") not in {"blocking", "advisory"}:
             errors.append(f"finding {index} has invalid severity")
         violated = finding.get("violated_requirements")
         if not isinstance(violated, list) or not violated or not all(isinstance(item, str) and item.strip() for item in violated):
             errors.append(f"finding {index} must list one or more violated_requirements ids")
     if record.get("status") == "FAIL" and not any(
-        isinstance(item, dict) and item.get("severity") == "blocking" for item in findings
+        isinstance(item, dict) and item.get("severity") == "blocking" and item.get("disposition", "defect") == "defect" for item in findings
     ):
         errors.append("FAIL result must include a blocking finding")
     if record.get("status") == "PASS" and any(
-        isinstance(item, dict) and item.get("severity") == "blocking" for item in findings
+        isinstance(item, dict) and item.get("severity") == "blocking" and item.get("disposition", "defect") == "defect" for item in findings
     ):
         errors.append("PASS result cannot include a blocking finding")
     return errors
@@ -571,7 +587,7 @@ def write_summary(run_dir: Path, summary: dict[str, Any], findings: list[dict[st
     coverage = summary["coverage"]
     json_dump(run_dir / "coverage.json", coverage)
     lines = [
-        "# Figure Acceptance summary",
+        "# Visual Inspection summary",
         "",
         f"- Overall status: **{summary['overall_status']}**",
         f"- Expected figure placements: {coverage['expected']}",
@@ -675,7 +691,7 @@ def validate(args: argparse.Namespace) -> int:
     invalid = sorted(set(finding_errors) | duplicate_ids | set(unexpected))
     statuses = [record.get("status") for record in by_task.values()]
     has_blocking = any(
-        isinstance(finding, dict) and finding.get("severity") == "blocking"
+        isinstance(finding, dict) and finding.get("severity") == "blocking" and finding.get("disposition", "defect") == "defect"
         for record in by_task.values()
         for finding in record.get("findings", [])
         if isinstance(record.get("findings"), list)
@@ -745,7 +761,7 @@ def main() -> int:
     try:
         return args.func(args)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
-        print(f"figure-acceptance: {exc}", file=sys.stderr)
+        print(f"visual-inspection: {exc}", file=sys.stderr)
         return 2
 
 

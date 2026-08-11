@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Visual Inspection audit finding",
+  "type": "object",
+  "required": ["task_id", "status", "model", "findings"],
+  "properties": {
+    "task_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["PASS", "FAIL", "NEEDS_HUMAN"]},
+    "model": {"const": "gpt-5.6-luna"},
+    "confidence_note": {"type": "string"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "severity", "evidence", "repair_action"],
+        "properties": {
+          "category": {
+            "enum": [
+              "crop_truncation",
+              "crop_excess",
+              "layout_collision",
+              "legibility",
+              "semantic_mismatch",
+              "role_confusion",
+              "duplicate_or_misaligned",
+              "missing_context",
+              "figure_text_metric_mismatch",
+              "figure_text_trend_mismatch",
+              "figure_caption_body_mismatch",
+              "evidence_low_resolution",
+              "source_residue",
+              "precise_region_evidence"
+            ]
+          },
+          "severity": {"enum": ["blocking", "advisory"]},
+          "disposition": {"enum": ["defect", "exempt"]},
+          "figure_evidence": {
+            "type": "object",
+            "required": ["path", "source_kind"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "source_kind": {"type": "string", "minLength": 1},
+              "source_page": {"type": "integer", "minimum": 1},
+              "crop": {"type": "object"},
+              "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"}
+            },
+            "additionalProperties": true
+          },
+          "text_evidence": {
+            "type": "object",
+            "required": ["path", "text_role", "claim"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "text_role": {"type": "string", "minLength": 1},
+              "claim": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": true
+          },
+          "contradiction": {
+            "type": "object",
+            "required": ["figure_claim", "text_claim", "dimension", "explanation"],
+            "properties": {
+              "figure_claim": {"type": "string", "minLength": 1},
+              "text_claim": {"type": "string", "minLength": 1},
+              "dimension": {"type": "string", "minLength": 1},
+              "explanation": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": true
+          },
+          "evidence": {"type": "string", "minLength": 1},
+          "violated_requirements": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "repair_action": {"type": "string", "minLength": 1}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"category": {"enum": ["figure_text_metric_mismatch", "figure_text_trend_mismatch", "figure_caption_body_mismatch"]}}},
+            "then": {"required": ["figure_evidence", "text_evidence", "contradiction"]}
+          }
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

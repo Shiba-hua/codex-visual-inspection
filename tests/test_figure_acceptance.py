@@ -13,8 +13,8 @@ from unittest import mock
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = REPO_ROOT / "plugins" / "figure-acceptance" / "scripts" / "figure_acceptance.py"
-POLICY = REPO_ROOT / "plugins" / "figure-acceptance" / "assets" / "auditor-policy.md"
+SCRIPT = REPO_ROOT / "plugins" / "visual-inspection" / "scripts" / "figure_acceptance.py"
+POLICY = REPO_ROOT / "plugins" / "visual-inspection" / "assets" / "auditor-policy.md"
 FIXTURE_ROOT = REPO_ROOT / "fixtures" / "public"
 
 spec = importlib.util.spec_from_file_location("figure_acceptance", SCRIPT)
@@ -200,6 +200,47 @@ class FigureAcceptanceTests(unittest.TestCase):
             self.assertEqual("NEEDS_HUMAN", summary["overall_status"])
             self.assertTrue(summary["coverage"]["invalid"])
             self.assertEqual(["figure-0001"], summary["coverage"]["model_violations"])
+
+    def test_figure_text_finding_requires_three_evidence_objects(self) -> None:
+        record = {
+            "task_id": "figure-0001", "status": "FAIL", "model": "gpt-5.6-luna",
+            "findings": [{
+                "category": "figure_text_metric_mismatch", "severity": "blocking",
+                "evidence": "plot and caption disagree", "violated_requirements": ["default.semantic-consistency"],
+                "repair_action": "align metric names"
+            }]
+        }
+        errors = figure_acceptance.validate_finding(record)
+        self.assertTrue(any("figure_evidence" in error for error in errors))
+        self.assertTrue(any("text_evidence" in error for error in errors))
+        self.assertTrue(any("contradiction" in error for error in errors))
+
+    def test_exempt_blocking_finding_does_not_fail_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir, inventory = self.discover_image(Path(temporary))
+            finding = {
+                "task_id": inventory[0]["figure_id"], "status": "PASS", "model": "gpt-5.6-luna",
+                "findings": [{
+                    "category": "source_residue", "severity": "blocking", "disposition": "exempt",
+                    "evidence": "placeholder is inside an explicitly marked template",
+                    "violated_requirements": ["default.semantic-consistency"],
+                    "repair_action": "retain placeholder in template context"
+                }]
+            }
+            (run_dir / "findings.jsonl").write_text(json.dumps(finding) + "\n", encoding="utf-8")
+            self.command("validate", "--run-dir", str(run_dir))
+            summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
+            self.assertEqual("PASS", summary["overall_status"])
+
+    def test_source_derived_assets_have_provenance_and_hashes(self) -> None:
+        manifest = json.loads((FIXTURE_ROOT / "asset_provenance.json").read_text(encoding="utf-8"))
+        self.assertEqual(4, len(manifest["assets"]))
+        for asset in manifest["assets"]:
+            path = FIXTURE_ROOT / asset["path"]
+            self.assertTrue(path.is_file())
+            self.assertEqual(sha256(path), asset["sha256"])
+            self.assertIn("source_project", asset)
+            self.assertNotIn("figure_error_exemptions_2026.pdf", asset["source"])
 
     def test_unknown_requirement_id_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

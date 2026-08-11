@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Figure Acceptance resolved requirements",
+  "title": "Visual Inspection resolved requirements",
   "type": "object",
   "required": ["precedence", "explicit", "inferred", "defaults", "conflicts", "effective"],
   "properties": {

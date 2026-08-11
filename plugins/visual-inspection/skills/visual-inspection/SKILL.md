@@ -1,9 +1,9 @@
 ---
-name: figure-acceptance
-description: Audit every logical figure placement in a LaTeX report, Markdown document, PDF, or image directory before publication. Use when the user asks to check figures, screenshots, diagrams, charts, captions, crops, readability, image mismatch, redraws, or visual acceptance.
+name: visual-inspection
+description: Audit every logical figure placement in a LaTeX report, Markdown document, PDF, or image directory before publication. Use for visual inspection of figures, screenshots, diagrams, charts, captions, crops, readability, image mismatch, redraws, source residue, and figure-text consistency.
 ---
 
-# Figure Acceptance
+# Visual Inspection
 
 Use this skill to perform a **read-only visual acceptance audit**. It discovers every logical figure placement, sends exactly one narrowly scoped `gpt-5.6-luna` subagent to inspect each placement, then produces a traceable audit ledger and repair handoff.
 
@@ -40,7 +40,7 @@ Run:
 python3 <plugin-root>/scripts/figure_acceptance.py discover \
   --target <latex|markdown|pdf|image-directory> \
   --requirements-file <requirements.json> \
-  --run-dir <target-parent>/.figure-acceptance/runs/<run-id>
+  --run-dir <target-parent>/.visual-inspection/runs/<run-id>
 ```
 
 For a LaTeX source, add `--render-tex` when a safe, local XeLaTeX build is appropriate. The helper uses a separate build directory and disables shell escape. If rendering is unavailable or fails, preserve the warning and do not claim complete page-layout coverage.
@@ -84,7 +84,7 @@ Write one valid JSON object per worker into `findings.jsonl` in the run director
 
 ```sh
 python3 <plugin-root>/scripts/figure_acceptance.py validate \
-  --run-dir <target-parent>/.figure-acceptance/runs/<run-id>
+  --run-dir <target-parent>/.visual-inspection/runs/<run-id>
 ```
 
 The validator writes:

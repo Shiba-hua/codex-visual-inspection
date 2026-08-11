@@ -1,6 +1,6 @@
-# Figure Acceptance auditor policy
+# Visual Inspection auditor policy
 
-**Policy version:** `1.0.0`  
+**Policy version:** `2.0.0`  
 **Required worker model:** `gpt-5.6-luna`  
 **Mode:** read-only visual audit
 
@@ -35,6 +35,23 @@ This prevents duplicate repair work and makes the repair handoff point to the as
 
 ## Required checks
 
+Before deciding a result, inspect the image evidence and then the associated caption,
+body text, annotation, or comment evidence. When text context exists, extract the
+figure metric, unit, direction, comparison object, and conclusion strength separately
+from the figure claim and the text claim. Compare them explicitly. A loss/accuracy
+swap, reversed trend, different comparison object, or stronger conclusion than the
+plot supports is a blocking figure-text finding. State what the figure says, what the
+text says, where they conflict, and which side should be repaired. Do not perform OCR
+alone as a substitute for visual evidence.
+
+If evidence is too small or blurry to judge, report `evidence_low_resolution` and
+return `NEEDS_HUMAN`; request a high-resolution source rather than guessing. If the
+user specifies a red box or issue region, report that precise region as the primary
+evidence while retaining the full page as context. Do not use unrelated body prose,
+reference lists, or page furniture as the main figure evidence. Source command or
+LaTeX residue is `source_residue`; an explicitly identified template placeholder may
+be reported with `disposition: exempt` and must not fail the overall audit.
+
 1. **Scope and context:** Confirm that the candidate asset belongs to this figure placement and that the page/context supports the stated caption and role.
 2. **Crop integrity:** Check whether axes, labels, model names, data marks, legend, title, required footnotes, and any user-required caption have been cut off. Also flag irrelevant body text, page headers/footers, adjacent figures, tables, or large paragraphs that dilute the figure.
 3. **Layout integrity:** Check for overlaps, collisions, occlusion, overflow, clipped text, duplicate elements, and detached legends/labels. Text must not fight with charts, titles, or other text.
@@ -62,11 +79,15 @@ This prevents duplicate repair work and makes the repair handoff point to the as
   "confidence_note": "short explanation of evidence strength",
   "findings": [
     {
-      "category": "crop_truncation | crop_excess | layout_collision | legibility | semantic_mismatch | role_confusion | duplicate_or_misaligned | missing_context",
+      "category": "crop_truncation | crop_excess | layout_collision | legibility | semantic_mismatch | role_confusion | duplicate_or_misaligned | missing_context | figure_text_metric_mismatch | figure_text_trend_mismatch | figure_caption_body_mismatch | evidence_low_resolution | source_residue | precise_region_evidence",
       "severity": "blocking | advisory",
+      "disposition": "defect | exempt",
       "evidence": "specific visible location and source/page reference",
       "violated_requirements": ["exact requirement id from the task payload, for example default.semantic-consistency"],
-      "repair_action": "specific action for the upstream author or agent"
+      "repair_action": "specific action for the upstream author or agent",
+      "figure_evidence": {"path": "evidence/figure.png", "source_kind": "latex_project_asset", "sha256": "64-hex"},
+      "text_evidence": {"path": "evidence/caption-body.png", "text_role": "caption_or_body", "claim": "text claim"},
+      "contradiction": {"figure_claim": "figure claim", "text_claim": "text claim", "dimension": "metric_or_trend", "explanation": "explicit contradiction"}
     }
   ]
 }
