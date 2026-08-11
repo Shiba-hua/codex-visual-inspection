@@ -35,7 +35,7 @@ flowchart LR
 | --- | --- | --- |
 | `.tex` | 解析 `\\includegraphics`、图环境、图注和关联文件。 | 可选安全 XeLaTeX 渲染；失败则标记限制。 |
 | `.md` | 解析 Markdown 图像链接与邻近说明。 | 资产本身与可得文本上下文。 |
-| `.pdf` | `pdfimages -list` 识别页面图像对象。 | `pdftoppm` 生成完整页面证据。 |
+| `.pdf` | `pdfimages -list` 识别栅格对象，并为每页增加矢量/页面级覆盖哨兵。 | `pdftoppm` 生成完整页面证据。 |
 | 图片目录 | 枚举 PNG/JPEG/WebP/SVG。 | 每个资产本身。 |
 
 逻辑图位不是单纯的文件名。例如同一 PNG 在正文和附录以不同裁剪方式出现时，形成两个独立图位。

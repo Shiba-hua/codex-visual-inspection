@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Figure Acceptance 系统架构</title>
+  <desc id="desc">主代理清点图位、分派 Luna 审计、验证结果并生成修复交接，全程不修改输入文件。</desc>
+  <style>
+    .h{font:700 31px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#17324d}.t{font:600 20px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#1f3444;text-anchor:middle}.s{font:500 15px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#496475;text-anchor:middle}.box{stroke-width:2.5;rx:18}.line{stroke:#5b7f91;stroke-width:3;fill:none;marker-end:url(#arrow)}.tag{font:700 15px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#fff;text-anchor:middle}</style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3 z" fill="#5b7f91"/></marker></defs>
+  <rect width="1200" height="500" fill="#fff"/>
+  <text x="60" y="58" class="h">一张逻辑图位，一名 Luna 视觉审计员</text>
+  <rect x="60" y="150" width="220" height="160" class="box" fill="#eff8ff" stroke="#3179a8"/>
+  <text x="170" y="205" class="t">用户验收契约</text><text x="170" y="236" class="s">目标 + 明确要求</text><text x="170" y="262" class="s">图注 / 原图 / 重绘</text>
+  <rect x="350" y="130" width="235" height="200" class="box" fill="#f7fbfd" stroke="#3179a8"/>
+  <text x="467" y="185" class="t">主代理</text><text x="467" y="216" class="s">清点每个逻辑图位</text><text x="467" y="242" class="s">解析需求优先级</text><text x="467" y="268" class="s">提供完整视觉上下文</text>
+  <rect x="655" y="130" width="235" height="200" class="box" fill="#f2fbf5" stroke="#198754"/>
+  <text x="772" y="185" class="t">Luna 子代理池</text><text x="772" y="216" class="s">每图位一个任务</text><text x="772" y="242" class="s">只用 gpt-5.6-luna</text><text x="772" y="268" class="s">min(30, 会话上限)</text>
+  <rect x="960" y="150" width="180" height="160" class="box" fill="#fff8e8" stroke="#b7791f"/>
+  <text x="1050" y="205" class="t">审计账本</text><text x="1050" y="236" class="s">PASS / FAIL /</text><text x="1050" y="262" class="s">NEEDS_HUMAN</text>
+  <path d="M280 230 H350" class="line"/><path d="M585 230 H655" class="line"/><path d="M890 230 H960" class="line"/>
+  <rect x="347" y="380" width="506" height="52" rx="26" fill="#0f766e"/><text x="600" y="413" class="tag">只读验收 → 修复交接 → 修复后复跑</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">验收需求优先级</title><desc id="desc">在平台安全限制下，用户明确要求优先于上下文推断、模式策略与默认规则。</desc>
+  <style>.h{font:700 30px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#17324d}.n{font:700 17px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#fff;text-anchor:middle}.t{font:600 18px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#263d4b;text-anchor:middle}</style>
+  <rect width="1200" height="360" fill="#fff"/><text x="60" y="56" class="h">视觉需求需要解析，不能凭默认猜测</text>
+  <rect x="72" y="120" width="230" height="112" rx="18" fill="#b42318"/><text x="187" y="158" class="n">1 · 平台安全</text><text x="187" y="189" class="n">始终生效</text>
+  <rect x="330" y="120" width="230" height="112" rx="18" fill="#0f766e"/><text x="445" y="158" class="n">2 · 用户明确要求</text><text x="445" y="189" class="n">图注、原图、重绘</text>
+  <rect x="588" y="120" width="230" height="112" rx="18" fill="#3179a8"/><text x="703" y="158" class="n">3 · 上下文推断</text><text x="703" y="189" class="n">必须写明依据</text>
+  <rect x="846" y="120" width="135" height="112" rx="18" fill="#7c5bb3"/><text x="913" y="158" class="n">4 · 模式</text><text x="913" y="189" class="n">策略</text>
+  <rect x="1009" y="120" width="135" height="112" rx="18" fill="#7b8790"/><text x="1076" y="158" class="n">5 · 默认</text><text x="1076" y="189" class="n">规则</text>
+  <text x="600" y="298" class="t">“必须含图注”只在已解析契约明确要求时才生效。</text>
+</svg>

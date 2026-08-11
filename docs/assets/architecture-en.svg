@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Figure Acceptance architecture</title>
+  <desc id="desc">A Main agent inventories figure placements, dispatches Luna auditors, validates results, and produces a repair handoff without editing input files.</desc>
+  <style>
+    .h{font:700 31px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#17324d}.t{font:600 20px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#1f3444;text-anchor:middle}.s{font:500 15px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#496475;text-anchor:middle}.box{stroke-width:2.5;rx:18}.line{stroke:#5b7f91;stroke-width:3;fill:none;marker-end:url(#arrow)}.tag{font:700 15px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#fff;text-anchor:middle}</style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3 z" fill="#5b7f91"/></marker></defs>
+  <rect width="1200" height="500" fill="#fff"/>
+  <text x="60" y="58" class="h">One placement, one Luna visual auditor</text>
+  <rect x="60" y="150" width="220" height="160" class="box" fill="#eff8ff" stroke="#3179a8"/>
+  <text x="170" y="205" class="t">User contract</text><text x="170" y="236" class="s">target + explicit needs</text><text x="170" y="262" class="s">caption / source / redraw</text>
+  <rect x="350" y="130" width="235" height="200" class="box" fill="#f7fbfd" stroke="#3179a8"/>
+  <text x="467" y="185" class="t">Main agent</text><text x="467" y="216" class="s">inventory every placement</text><text x="467" y="242" class="s">resolve requirement priority</text><text x="467" y="268" class="s">attach full visual context</text>
+  <rect x="655" y="130" width="235" height="200" class="box" fill="#f2fbf5" stroke="#198754"/>
+  <text x="772" y="185" class="t">Luna worker pool</text><text x="772" y="216" class="s">one task per placement</text><text x="772" y="242" class="s">gpt-5.6-luna only</text><text x="772" y="268" class="s">min(30, session cap)</text>
+  <rect x="960" y="150" width="180" height="160" class="box" fill="#fff8e8" stroke="#b7791f"/>
+  <text x="1050" y="205" class="t">Audit ledger</text><text x="1050" y="236" class="s">PASS / FAIL /</text><text x="1050" y="262" class="s">NEEDS_HUMAN</text>
+  <path d="M280 230 H350" class="line"/><path d="M585 230 H655" class="line"/><path d="M890 230 H960" class="line"/>
+  <rect x="347" y="380" width="506" height="52" rx="26" fill="#0f766e"/><text x="600" y="413" class="tag">Read-only audit → repair handoff → rerun after repair</text>
+</svg>

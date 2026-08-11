@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Requirement precedence</title><desc id="desc">Explicit user requirements override inferred requirements, task-mode policy, and defaults, subject to platform safety.</desc>
+  <style>.h{font:700 30px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#17324d}.n{font:700 17px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#fff;text-anchor:middle}.t{font:600 18px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#263d4b;text-anchor:middle}.s{font:500 14px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;fill:#567281;text-anchor:middle}</style>
+  <rect width="1200" height="360" fill="#fff"/><text x="60" y="56" class="h">Visual requirements are resolved, not assumed</text>
+  <rect x="72" y="120" width="230" height="112" rx="18" fill="#b42318"/><text x="187" y="158" class="n">1 · Platform safety</text><text x="187" y="189" class="n">always applies</text>
+  <rect x="330" y="120" width="230" height="112" rx="18" fill="#0f766e"/><text x="445" y="158" class="n">2 · Explicit user need</text><text x="445" y="189" class="n">caption, original, redraw</text>
+  <rect x="588" y="120" width="230" height="112" rx="18" fill="#3179a8"/><text x="703" y="158" class="n">3 · Inferred context</text><text x="703" y="189" class="n">with written rationale</text>
+  <rect x="846" y="120" width="135" height="112" rx="18" fill="#7c5bb3"/><text x="913" y="158" class="n">4 · Mode</text><text x="913" y="189" class="n">policy</text>
+  <rect x="1009" y="120" width="135" height="112" rx="18" fill="#7b8790"/><text x="1076" y="158" class="n">5 · Default</text><text x="1076" y="189" class="n">rules</text>
+  <text x="600" y="298" class="t">A caption is required only when the resolved contract says so.</text>
+</svg>
