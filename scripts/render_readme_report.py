@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a portable SVG summary card from a verified Figure Acceptance run."""
+"""Render a portable SVG summary card from a verified Visual Inspection run."""
 
 from __future__ import annotations
 

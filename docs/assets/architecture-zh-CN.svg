@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
-  <title id="title">Figure Acceptance 系统架构</title>
+  <title id="title">Visual Inspection 系统架构</title>
   <desc id="desc">主代理清点图位、分派 Luna 审计、验证结果并生成修复交接，全程不修改输入文件。</desc>
   <style>
     .h{font:700 31px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#17324d}.t{font:600 20px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#1f3444;text-anchor:middle}.s{font:500 15px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#496475;text-anchor:middle}.box{stroke-width:2.5;rx:18}.line{stroke:#5b7f91;stroke-width:3;fill:none;marker-end:url(#arrow)}.tag{font:700 15px 'Noto Sans CJK SC','PingFang SC',sans-serif;fill:#fff;text-anchor:middle}</style>

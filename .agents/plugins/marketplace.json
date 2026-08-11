@@ -1,14 +1,14 @@
 {
-  "name": "figure-acceptance",
+  "name": "visual-inspection",
   "interface": {
-    "displayName": "Figure Acceptance"
+    "displayName": "Visual Inspection"
   },
   "plugins": [
     {
-      "name": "figure-acceptance",
+      "name": "visual-inspection",
       "source": {
         "source": "local",
-        "path": "./plugins/figure-acceptance"
+        "path": "./plugins/visual-inspection"
       },
       "policy": {
         "installation": "AVAILABLE",

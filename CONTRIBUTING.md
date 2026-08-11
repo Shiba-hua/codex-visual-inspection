@@ -7,7 +7,7 @@ Thank you for helping make visual acceptance more dependable.
 ```sh
 python3 scripts/validate_package.py
 python3 -m unittest discover -s tests -v
-python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/figure-acceptance
+python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/visual-inspection
 ```
 
 Keep source changes, tests, and documentation in the same pull request. Do not change a generated audit run or a rendered README image without updating the source that generated it.

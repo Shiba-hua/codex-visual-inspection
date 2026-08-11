@@ -1,20 +1,29 @@
 # Test and QA record
 
 **Date:** 2026-08-11  
-**Product version:** `0.1.0`  
+**Product version:** `0.2.0`
 **Scope:** public fixtures and product assets only; no user-private report images were used.
 
 ## Deterministic validation
 
 | Check | Result |
 | --- | --- |
-| `python3 -m unittest discover -s tests -v` | 17/17 passed |
+| `python3 -m unittest discover -s tests -v` | 20/20 passed |
 | `python3 scripts/validate_package.py` | passed |
 | Plugin Creator `validate_plugin.py` | passed |
 | Local Marketplace add, plugin install/list, then remove | passed; local Codex configuration restored |
 | LaTeX, Markdown, image directory, vector-PDF and mixed raster/vector-PDF page coverage | passed |
 | Requirements conflict / missing result / non-Luna result fail-closed paths | passed |
 | Input immutability | passed |
+| Figure-text evidence requirements, exempt disposition, source provenance/hash gate | passed |
+
+## 0.2.0 release notes
+
+The source-derived fixtures are copied from the LaTeX project recorded in
+`fixtures/public/asset_provenance.json`. The figure/text fixtures include the graph
+and caption/body evidence together; the Terminal-Bench fixture is a precise issue
+region; the placeholder is an explicit exempt negative sample. No fixture was
+captured from an error-summary PDF or user attachment.
 
 ## Real Luna smoke tests
 

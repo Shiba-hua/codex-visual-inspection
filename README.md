@@ -1,12 +1,12 @@
-# Figure Acceptance
+# Visual Inspection
 
 **A read-only visual acceptance plugin for figures in papers, reports, and technical documents.**
 
 [简体中文](README.zh-CN.md) · [PRD](docs/PRD.md) · [System design](docs/SYSTEM_DESIGN.md) · [Test results](docs/TEST_RESULTS.md) · [Contributing](CONTRIBUTING.md)
 
-`Figure Acceptance` inventories every logical figure placement, gives each placement to one narrowly scoped `gpt-5.6-luna` visual auditor, and returns a traceable audit ledger plus repair handoff. It does not alter your figures or report files.
+`Visual Inspection` inventories every logical figure placement, gives each placement to one narrowly scoped `gpt-5.6-luna` visual auditor, and returns a traceable audit ledger plus repair handoff. It does not alter your figures or report files. Version 0.2.0 also compares figure metrics/trends with captions and body text, requests high-resolution evidence, records precise issue regions, and distinguishes explicit template exemptions from defects.
 
-![Figure Acceptance architecture](docs/assets/architecture-en.svg)
+![Visual Inspection architecture](docs/assets/architecture-en.svg)
 
 ## Why it exists
 
@@ -65,9 +65,9 @@ The cards are generated from real local smoke-test ledgers on public fixtures; t
 ### From a local checkout
 
 ```sh
-cd codex-figure-acceptance
+cd codex-visual-inspection
 codex plugin marketplace add .
-codex plugin add figure-acceptance@figure-acceptance
+codex plugin add visual-inspection@visual-inspection
 ```
 
 Restart the ChatGPT desktop app or begin a new Codex task after installation so the skill is loaded.
@@ -81,7 +81,7 @@ This working tree deliberately has no fabricated GitHub owner or remote URL, so 
 Ask for the skill directly, or describe the audit in natural language:
 
 ```text
-$figure-acceptance Audit every figure in report/main.tex before publication.
+$visual-inspection Inspect every figure in report/main.tex before publication, including figure-text consistency.
 The full caption must be included whenever an original Figure is cropped.
 For each original source screenshot, check the separate Chinese redraw too.
 ```
@@ -89,15 +89,15 @@ For each original source screenshot, check the separate Chinese redraw too.
 The Main agent will create a requirements record, discover figures, and dispatch Luna workers. The plugin's deterministic helper can also be used directly:
 
 ```sh
-python3 plugins/figure-acceptance/scripts/figure_acceptance.py discover \
+python3 plugins/visual-inspection/scripts/figure_acceptance.py discover \
   --target report/main.tex \
   --render-tex \
   --requirements-file requirements.json \
-  --run-dir .figure-acceptance/runs/release-audit
+  --run-dir .visual-inspection/runs/release-audit
 
 # After the Main agent has collected one Luna JSON result per task:
-python3 plugins/figure-acceptance/scripts/figure_acceptance.py validate \
-  --run-dir .figure-acceptance/runs/release-audit
+python3 plugins/visual-inspection/scripts/figure_acceptance.py validate \
+  --run-dir .visual-inspection/runs/release-audit
 ```
 
 An optional requirements file makes special expectations explicit:
@@ -117,7 +117,7 @@ An optional requirements file makes special expectations explicit:
 
 ## Output contract
 
-Every run writes a separate `.figure-acceptance/runs/<run-id>/` directory:
+Every run writes a separate `.visual-inspection/runs/<run-id>/` directory:
 
 | File | Purpose |
 | --- | --- |
@@ -147,7 +147,7 @@ The plugin is read-only with respect to inputs. It writes only a separate audit 
 ```sh
 python3 scripts/validate_package.py
 python3 -m unittest discover -s tests -v
-python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/figure-acceptance
+python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/visual-inspection
 ```
 
 The deterministic suite covers discovery, requirements, model locking, JSON validation, coverage gates, input immutability, public fixtures, and PDF page candidates. The documented Luna smoke tests cover both a failing mismatch case and a clean passing pair.

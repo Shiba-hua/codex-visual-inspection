@@ -61,7 +61,7 @@ flowchart LR
   "assets": [{"path": "figures/example.png", "sha256": "...", "role": "source_figure"}],
   "evidence": {"page_render": "evidence/pages/page-003.png"},
   "requirements": ["图注必须纳入截图"],
-  "auditor_policy_version": "1.0.0",
+  "auditor_policy_version": "2.0.0",
   "required_model": "gpt-5.6-luna"
 }
 ```
@@ -74,6 +74,8 @@ Main agent 必须为每个任务传递版本化审计指令包。该包要求子
 4. 区分“正式原图”“独立汉化/作者重绘”“未知角色”；
 5. 不在证据不足时猜测；
 6. 只返回符合 Schema 的 JSON。
+
+当任务具备图注、正文、批注或上下文文字时，审计者还必须建立图像证据与文字证据双通道：分别提取指标、单位、趋势、比较对象和结论强度，并在 `contradiction` 中解释冲突。低清证据必须回溯高清源或转人工；用户指定红框时记录精准区域，同时保留完整页面作为上下文。
 
 产品不能替换平台 system prompt，因此所谓“审计系统提示词”是随任务原样传递的版本化指令包；文档与账本必须明确这一点。
 
@@ -97,14 +99,20 @@ Main agent 必须为每个任务传递版本化审计指令包。该包要求子
 | `role_confusion` | 原图、自绘、汉化图的角色误标或混淆。 |
 | `duplicate_or_misaligned` | 重复图、错位图或不当复用。 |
 | `missing_context` | 无法获得用户要求所需的页面/图注/来源证据。 |
+| `figure_text_metric_mismatch` | 图中指标与图注/正文指标不同，例如 loss 与 accuracy 混用。 |
+| `figure_text_trend_mismatch` | 图中趋势方向与正文/图注描述相反。 |
+| `figure_caption_body_mismatch` | 图注、正文与图中结论不一致。 |
+| `evidence_low_resolution` | 证据不足以可靠判断，要求回溯高清源。 |
+| `source_residue` | 源码命令、LaTeX 控制序列或异常格式残留。 |
+| `precise_region_evidence` | 用户指定问题区域必须被单独记录，避免整页无关内容。 |
 
-“图片打架”至少对应 `semantic_mismatch`；若同时出现文本冲突，另报告 `layout_collision`。
+“图片打架”至少对应 `semantic_mismatch`；若同时出现文本冲突，另报告相应图文类别。模板上下文中明确允许的占位符使用 finding-level `disposition: exempt`，不改变顶层状态。
 
 ## 7. 状态与账本
 
 `PASS` 仅在全量图位审计完成、无阻断发现且无未决冲突时产生。确认缺陷为 `FAIL`；证据不足、渲染失败、模型不可用、结果无效或要求冲突为 `NEEDS_HUMAN`。
 
-一次运行的产物位于 `.figure-acceptance/runs/<run-id>/`，包含：
+一次运行的产物位于 `.visual-inspection/runs/<run-id>/`，包含：
 
 - `summary.md` 与 `summary.json`；
 - `figure_inventory.jsonl` 与 `audit_tasks.jsonl`；

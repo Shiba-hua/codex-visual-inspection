@@ -1,12 +1,12 @@
-# Figure Acceptance（图像验收）
+# Visual Inspection（视觉验收）
 
 **面向论文、报告和技术文档图表的只读视觉验收 Codex 插件。**
 
 [English](README.md) · [产品需求文档](docs/PRD.md) · [系统设计](docs/SYSTEM_DESIGN.md) · [测试结果](docs/TEST_RESULTS.md) · [贡献指南](CONTRIBUTING.md)
 
-`Figure Acceptance` 会清点文档中的每个逻辑图位，为每个图位派出一名范围严格限定的 `gpt-5.6-luna` 视觉审计子代理，并输出可追溯审计账本和修复交接。它不会修改你的图片、图注或报告源文件。
+`Visual Inspection` 会清点文档中的每个逻辑图位，为每个图位派出一名范围严格限定的 `gpt-5.6-luna` 视觉审计子代理，并输出可追溯审计账本和修复交接。它不会修改你的图片、图注或报告源文件。0.2.0 还会在有文字上下文时核对图中指标/趋势与图注、正文，要求高清证据，记录精准问题区域，并区分明确模板豁免与真实缺陷。
 
-![Figure Acceptance 系统架构](docs/assets/architecture-zh-CN.svg)
+![Visual Inspection 系统架构](docs/assets/architecture-zh-CN.svg)
 
 ## 它解决什么问题
 
@@ -65,9 +65,9 @@ PDF 能成功编译，并不代表图像已经合格。常见问题包括：
 ### 从本地工作副本安装
 
 ```sh
-cd codex-figure-acceptance
+cd codex-visual-inspection
 codex plugin marketplace add .
-codex plugin add figure-acceptance@figure-acceptance
+codex plugin add visual-inspection@visual-inspection
 ```
 
 安装后请重启 ChatGPT 桌面端，或新建一个 Codex task，让插件 Skill 被重新加载。
@@ -81,7 +81,7 @@ codex plugin add figure-acceptance@figure-acceptance
 可以直接调用 Skill，或用自然语言描述验收要求：
 
 ```text
-$figure-acceptance 在发布前检查 report/main.tex 中的每一张图。
+$visual-inspection 在发布前检查 report/main.tex 中的每一张图，并核对图文一致性。
 凡是原始 Figure 的裁图，必须完整包含图注。
 每张原始截图都要检查对应的独立中文重绘图。
 ```
@@ -89,15 +89,15 @@ $figure-acceptance 在发布前检查 report/main.tex 中的每一张图。
 Main agent 会建立需求账本、发现图位、派出 Luna，并汇总审计。也可以直接使用确定性辅助脚本：
 
 ```sh
-python3 plugins/figure-acceptance/scripts/figure_acceptance.py discover \
+python3 plugins/visual-inspection/scripts/figure_acceptance.py discover \
   --target report/main.tex \
   --render-tex \
   --requirements-file requirements.json \
-  --run-dir .figure-acceptance/runs/release-audit
+  --run-dir .visual-inspection/runs/release-audit
 
 # Main agent 收齐每项 Luna JSON 结果后：
-python3 plugins/figure-acceptance/scripts/figure_acceptance.py validate \
-  --run-dir .figure-acceptance/runs/release-audit
+python3 plugins/visual-inspection/scripts/figure_acceptance.py validate \
+  --run-dir .visual-inspection/runs/release-audit
 ```
 
 可选的 `requirements.json` 用于记录特殊要求：
@@ -117,7 +117,7 @@ python3 plugins/figure-acceptance/scripts/figure_acceptance.py validate \
 
 ## 输出契约
 
-每次运行均写入独立的 `.figure-acceptance/runs/<run-id>/`：
+每次运行均写入独立的 `.visual-inspection/runs/<run-id>/`：
 
 | 文件 | 作用 |
 | --- | --- |
@@ -147,7 +147,7 @@ python3 plugins/figure-acceptance/scripts/figure_acceptance.py validate \
 ```sh
 python3 scripts/validate_package.py
 python3 -m unittest discover -s tests -v
-python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/figure-acceptance
+python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/visual-inspection
 ```
 
 确定性测试覆盖图位发现、需求继承、模型锁定、JSON 校验、覆盖率门禁、输入只读、公开 fixture 与 PDF 页面候选。文档化的 Luna 烟雾测试同时覆盖错误错配样例和干净通过样例。

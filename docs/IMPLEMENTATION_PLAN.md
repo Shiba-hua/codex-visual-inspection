@@ -6,7 +6,7 @@
 
 ## 2. 仓库组成
 
-- 仓库级 Marketplace，指向 `plugins/figure-acceptance`。
+- 仓库级 Marketplace，指向 `plugins/visual-inspection`；包名与命令为 `visual-inspection` / `$visual-inspection`。
 - 插件 manifest、Skill、审计策略、JSON Schema 与确定性辅助脚本。
 - 独立的公开 fixtures、测试、CI、文档、许可证与贡献说明。
 - README 图像使用自绘 SVG 和由公共 fixture 产生的可复现报告资产。

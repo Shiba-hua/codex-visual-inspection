@@ -10,3 +10,9 @@
 | ADR-006 | 2026-08-11 | 公共 fixture 只用手工重绘/自有素材。 | 防止公开发布私有或版权不清资产。 |
 | ADR-007 | 2026-08-11 | README 采用英文主文和完整中文版本。 | 面向 GitHub 国际用户，同时保留中文读者完整体验。 |
 | ADR-008 | 2026-08-11 | 初期通过仓库 Marketplace 分发，后续再评估官方通用目录。 | 先保证可安装、可测试、可复现。 |
+# 2026-08-11 — Visual Inspection 0.2.0
+
+- Adopted complete package/command rename to `visual-inspection` / `$visual-inspection`; no old marketplace alias is retained.
+- Kept top-level `PASS` / `FAIL` / `NEEDS_HUMAN`; template exemptions are finding-level `disposition: exempt`.
+- Added figure-text dual evidence, contradiction explanation, high-resolution fallback, precise-region evidence, source-residue category, and source-first fixture provenance.
+- New public fixture assets are copied from `research/figure-error-exemptions-2026`, never from report PDFs or user attachments.
