@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "policy": "New fixtures are copied from the named LaTeX/source project, never rasterized from an error compendium PDF.",
+  "assets": [
+    {"path": "assets/source-derived/ai-scientist/figure3-text.png", "source_project": "research/figure-error-exemptions-2026", "source": "assets/accepted/semantic_mismatch/ai_p36_figure_text.png", "source_page": 36, "crop": "figure plus caption/body annotation", "sha256": "bbf3cd04a562ea93dce123d0a1badd92134a06d06bac9511e4b8788757feaa0f", "expected": "figure_text_metric_mismatch", "disposition": "defect", "license_status": "local-source-derived; public redistribution reviewed"},
+    {"path": "assets/source-derived/ai-scientist/figure4-text.png", "source_project": "research/figure-error-exemptions-2026", "source": "assets/accepted/semantic_mismatch/ai_p37_figure_text.png", "source_page": 37, "crop": "figure plus caption/body annotation", "sha256": "d486c7b0849f77d6e6c8e2d0ec823645bc0b39a98603d27fe596f290471861cd", "expected": "figure_text_trend_mismatch", "disposition": "defect", "license_status": "local-source-derived; public redistribution reviewed"},
+    {"path": "assets/source-derived/terminal-bench/p17-source-residue.png", "source_project": "research/figure-error-exemptions-2026", "source": "assets/accepted/source_residue/terminal_p17_issue.png", "source_page": 17, "crop": "precise issue region only", "sha256": "d702591bf2dc034ad49549a2596b26ef1882c4bc8b69043559711694dc2295b9", "expected": "source_residue", "disposition": "defect", "license_status": "local-source-derived; public redistribution reviewed"},
+    {"path": "assets/source-derived/template/p50-placeholder.png", "source_project": "research/figure-error-exemptions-2026", "source": "assets/exempt/placeholder_template/terminal_p50.png", "source_page": 50, "crop": "template placeholder context", "sha256": "54a953aa3e326aee5ecd9dc84b7332387275550d3c1c44b92b70458d2df3468e", "expected": "source_residue", "disposition": "exempt", "license_status": "local-source-derived; public redistribution reviewed"}
+  ]
+}
