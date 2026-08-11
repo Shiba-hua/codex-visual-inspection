@@ -62,10 +62,9 @@ PDF 能成功编译，并不代表图像已经合格。常见问题包括：
 
 ## 安装
 
-### 从本地克隆安装
+### 从本地工作副本安装
 
 ```sh
-git clone https://github.com/OWNER/codex-figure-acceptance.git
 cd codex-figure-acceptance
 codex plugin marketplace add .
 codex plugin add figure-acceptance@figure-acceptance
@@ -75,14 +74,7 @@ codex plugin add figure-acceptance@figure-acceptance
 
 ### 从已发布 GitHub 仓库安装
 
-仓库拥有真实公开 GitHub owner 后，使用 Codex 的 Git Marketplace 形式：
-
-```sh
-codex plugin marketplace add OWNER/codex-figure-acceptance --ref main
-codex plugin add figure-acceptance@figure-acceptance
-```
-
-当前仓库尚未指定公开 owner，因此没有伪造 URL；发布时请将 `OWNER` 替换为真实发布者。
+此工作副本尚未设定真实公开 GitHub owner 或远程地址，因此不会写入一个实际上无法执行的安装命令。维护者确定公开仓库和发布分支后，请在此处补充准确的 Git Marketplace 安装命令。打包与发布方式可参阅 [Codex 官方插件指南](https://developers.openai.com/plugins/build/plugins)。
 
 ## 在 Codex 中使用
 

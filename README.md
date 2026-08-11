@@ -62,10 +62,9 @@ The cards are generated from real local smoke-test ledgers on public fixtures; t
 
 ## Install
 
-### From a local clone
+### From a local checkout
 
 ```sh
-git clone https://github.com/OWNER/codex-figure-acceptance.git
 cd codex-figure-acceptance
 codex plugin marketplace add .
 codex plugin add figure-acceptance@figure-acceptance
@@ -75,14 +74,7 @@ Restart the ChatGPT desktop app or begin a new Codex task after installation so 
 
 ### From a published GitHub repository
 
-Once this repository has an actual public owner, use Codex's Git marketplace form:
-
-```sh
-codex plugin marketplace add OWNER/codex-figure-acceptance --ref main
-codex plugin add figure-acceptance@figure-acceptance
-```
-
-`OWNER` is intentionally not fabricated in this pre-release repository. Replace it with the publisher's real GitHub owner at release time.
+This working tree deliberately has no fabricated GitHub owner or remote URL, so it does not advertise an install command that cannot work. After a maintainer assigns a real public repository and release branch, publish the exact Git Marketplace command in this section. The expected packaging route is documented in the [official Codex plugin guide](https://developers.openai.com/plugins/build/plugins).
 
 ## Use it in Codex
 
