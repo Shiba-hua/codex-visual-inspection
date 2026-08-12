@@ -4,6 +4,8 @@
 
 [简体中文](README.zh-CN.md) · [PRD](docs/PRD.md) · [System design](docs/SYSTEM_DESIGN.md) · [Test results](docs/TEST_RESULTS.md) · [Contributing](CONTRIBUTING.md)
 
+Latest release: `0.2.0` · Package: `visual-inspection` · Skill: `$visual-inspection` · [GitHub repository](https://github.com/Shiba-hua/codex-visual-inspection)
+
 `Visual Inspection` inventories every logical figure placement, gives each placement to one narrowly scoped `gpt-5.6-luna` visual auditor, and returns a traceable audit ledger plus repair handoff. It does not alter your figures or report files. Version 0.2.0 also compares figure metrics/trends with captions and body text, requests high-resolution evidence, records precise issue regions, and distinguishes explicit template exemptions from defects.
 
 ![Visual Inspection architecture](docs/assets/architecture-en.svg)
@@ -19,6 +21,24 @@ A compiled PDF can still contain a broken figure:
 - the same image appears in several locations, but only one placement was checked.
 
 This plugin makes those placements explicit and refuses to report a complete `PASS` when coverage, evidence, model locking, or requirement resolution is incomplete.
+
+## What is new in 0.2.0
+
+Version 0.2.0 retains the original discovery and read-only audit workflow and adds evidence-aware inspection for errors frequently introduced by automated paper writing and Codex-generated research reports:
+
+| Capability | What it catches or records |
+| --- | --- |
+| Figure-text metric consistency | A plot shows `Final Validation Loss` while the caption or body claims `accuracy`. |
+| Figure-text trend consistency | Bars or curves move upward while the prose describes a decrease, plateau, or non-improvement. |
+| Caption/body consistency | The figure, caption, and surrounding paragraph make different claims or use different comparison objects. |
+| High-resolution evidence | Blurry evidence is not guessed through; it becomes `evidence_low_resolution` and requests a source-quality asset. |
+| Precise issue regions | A user-marked red-box/problem region is recorded as the primary evidence instead of shipping an unrelated full-page crop. |
+| Source residue | Visible LaTeX commands, source markup, malformed glyphs, or command fragments are reported as `source_residue`. |
+| Explicit exemptions | A placeholder in a clearly identified template context can be recorded as `disposition: exempt`; it does not become a global failure. |
+
+For figure-text findings, Luna must return the figure evidence, text evidence, and a structured `contradiction` explaining what the plot says, what the text says, and which dimension conflicts. The original categories—crop loss, excess crop, layout collision, legibility, semantic mismatch, role confusion, duplicate/misaligned assets, and missing context—remain supported.
+
+New public source-derived fixtures are tracked in [`fixtures/public/asset_provenance.json`](fixtures/public/asset_provenance.json). They are copied from the named LaTeX/source project with page/crop metadata and SHA-256 hashes; they are not captured from an error-compendium PDF or a user attachment.
 
 ## How it works
 
@@ -72,9 +92,18 @@ codex plugin add visual-inspection@visual-inspection
 
 Restart the ChatGPT desktop app or begin a new Codex task after installation so the skill is loaded.
 
-### From a published GitHub repository
+### From the GitHub repository
 
-This working tree deliberately has no fabricated GitHub owner or remote URL, so it does not advertise an install command that cannot work. After a maintainer assigns a real public repository and release branch, publish the exact Git Marketplace command in this section. The expected packaging route is documented in the [official Codex plugin guide](https://developers.openai.com/plugins/build/plugins).
+The repository is [Shiba-hua/codex-visual-inspection](https://github.com/Shiba-hua/codex-visual-inspection). Clone it and install from the checkout:
+
+```sh
+git clone https://github.com/Shiba-hua/codex-visual-inspection.git
+cd codex-visual-inspection
+codex plugin marketplace add .
+codex plugin add visual-inspection@visual-inspection
+```
+
+The expected packaging route is documented in the [official Codex plugin guide](https://developers.openai.com/plugins/build/plugins).
 
 ## Use it in Codex
 
@@ -150,7 +179,7 @@ python3 -m unittest discover -s tests -v
 python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/visual-inspection
 ```
 
-The deterministic suite covers discovery, requirements, model locking, JSON validation, coverage gates, input immutability, public fixtures, and PDF page candidates. The documented Luna smoke tests cover both a failing mismatch case and a clean passing pair.
+The deterministic suite covers discovery, requirements, model locking, JSON validation, coverage gates, input immutability, public fixtures, PDF page candidates, figure-text evidence requirements, explicit exemptions, and source provenance/hash validation. The documented Luna smoke tests cover both a failing mismatch case and a clean passing pair.
 
 ## Contributing and license
 

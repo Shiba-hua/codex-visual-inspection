@@ -4,6 +4,8 @@
 
 [English](README.md) · [产品需求文档](docs/PRD.md) · [系统设计](docs/SYSTEM_DESIGN.md) · [测试结果](docs/TEST_RESULTS.md) · [贡献指南](CONTRIBUTING.md)
 
+当前版本：`0.2.0` · 插件包：`visual-inspection` · Skill：`$visual-inspection` · [GitHub 仓库](https://github.com/Shiba-hua/codex-visual-inspection)
+
 `Visual Inspection` 会清点文档中的每个逻辑图位，为每个图位派出一名范围严格限定的 `gpt-5.6-luna` 视觉审计子代理，并输出可追溯审计账本和修复交接。它不会修改你的图片、图注或报告源文件。0.2.0 还会在有文字上下文时核对图中指标/趋势与图注、正文，要求高清证据，记录精准问题区域，并区分明确模板豁免与真实缺陷。
 
 ![Visual Inspection 系统架构](docs/assets/architecture-zh-CN.svg)
@@ -19,6 +21,24 @@ PDF 能成功编译，并不代表图像已经合格。常见问题包括：
 - 同一图片在正文和附录以不同方式排版，却只检查了一处。
 
 本插件把这些图位显式登记，并在覆盖率、证据、模型锁定或需求解析不完整时拒绝报告整体 `PASS`。
+
+## 0.2.0 新特性
+
+0.2.0 保留原有图位发现、Luna 审计、只读边界和覆盖率门禁，并新增针对论文自动化写作、Codex 自动调研报告中常见错误的证据化检查：
+
+| 能力 | 检查或记录的典型问题 |
+| --- | --- |
+| 图文指标一致性 | 图中写 `Final Validation Loss`，但图注或正文写成 `accuracy`。 |
+| 图文趋势一致性 | 柱形/曲线实际上升，但文字描述为下降、平台期或没有改善。 |
+| 图注/正文一致性 | 图、图注和邻近正文使用了不同结论或不同比较对象。 |
+| 高清证据 | 证据模糊时不允许猜测，返回 `evidence_low_resolution` 并要求回溯高清资产。 |
+| 精准问题区域 | 用户指定红框/问题区域时，将其作为主要证据，不把整页无关内容放入夹具。 |
+| 源码残留 | 报告中出现 LaTeX 命令、源码标记、异常字形或命令片段时报告 `source_residue`。 |
+| 明确豁免 | 清楚标记为模板上下文的占位符可用 `disposition: exempt` 记录，不导致整体失败。 |
+
+图文矛盾类 finding 必须同时返回图像证据、文字证据和结构化 `contradiction`，明确说明图说了什么、文字说了什么、哪一维度发生冲突，以及应修复哪一侧。原有的裁断、过度截取、版式碰撞、可读性、语义错配、角色混淆、重复/错位和上下文缺失类别继续有效。
+
+新增公开源工程夹具及其页码、裁剪信息和 SHA-256 记录在 [`fixtures/public/asset_provenance.json`](fixtures/public/asset_provenance.json)。这些资产直接从登记的 LaTeX/源工程复制，绝不从错误汇总 PDF 或用户附件截图。
 
 ## 工作方式
 
@@ -72,9 +92,18 @@ codex plugin add visual-inspection@visual-inspection
 
 安装后请重启 ChatGPT 桌面端，或新建一个 Codex task，让插件 Skill 被重新加载。
 
-### 从已发布 GitHub 仓库安装
+### 从 GitHub 仓库安装
 
-此工作副本尚未设定真实公开 GitHub owner 或远程地址，因此不会写入一个实际上无法执行的安装命令。维护者确定公开仓库和发布分支后，请在此处补充准确的 Git Marketplace 安装命令。打包与发布方式可参阅 [Codex 官方插件指南](https://developers.openai.com/plugins/build/plugins)。
+仓库为 [Shiba-hua/codex-visual-inspection](https://github.com/Shiba-hua/codex-visual-inspection)。先克隆，再从本地工作副本安装：
+
+```sh
+git clone https://github.com/Shiba-hua/codex-visual-inspection.git
+cd codex-visual-inspection
+codex plugin marketplace add .
+codex plugin add visual-inspection@visual-inspection
+```
+
+打包与发布方式可参阅 [Codex 官方插件指南](https://developers.openai.com/plugins/build/plugins)。
 
 ## 在 Codex 中使用
 
@@ -150,7 +179,7 @@ python3 -m unittest discover -s tests -v
 python3 /path/to/plugin-creator/scripts/validate_plugin.py plugins/visual-inspection
 ```
 
-确定性测试覆盖图位发现、需求继承、模型锁定、JSON 校验、覆盖率门禁、输入只读、公开 fixture 与 PDF 页面候选。文档化的 Luna 烟雾测试同时覆盖错误错配样例和干净通过样例。
+确定性测试覆盖图位发现、需求继承、模型锁定、JSON 校验、覆盖率门禁、输入只读、公开 fixture、PDF 页面候选、图文证据要求、明确豁免以及资产来源/哈希校验。文档化的 Luna 烟雾测试同时覆盖错误错配样例和干净通过样例。
 
 ## 贡献与许可证
 
